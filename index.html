@@ -2,984 +2,1311 @@
 <html lang="es">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerta Vecinal Segura SJL</title>
 
-<title>Alerta Vecinal Segura SJL</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-<style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dce9f7, #eef3f8);
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 30px 15px;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
 
-* {
-    box-sizing: border-box;
-}
+        .app {
+            background: white;
+            max-width: 450px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px #b8c7d8;
+            transition: background 0.3s;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #dce9f7, #eef3f8);
-    text-align: center;
-    margin: 0;
-    padding: 30px 15px;
-    min-height: 100vh;
-}
+        h1 {
+            color: #17365d;
+            font-size: 24px;
+        }
 
-.app {
-    background: white;
-    max-width: 430px;
-    margin: auto;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 5px 25px #b8c7d8;
-}
+        h2 {
+            color: #17365d;
+            font-size: 21px;
+        }
 
-h1 {
-    color: #17365d;
-    font-size: 24px;
-}
+        h3 {
+            color: #17365d;
+        }
 
-h2 {
-    color: #17365d;
-    font-size: 21px;
-}
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
 
-h3 {
-    color: #17365d;
-}
+        .subtitulo {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+        }
 
-p {
-    color: #555;
-    line-height: 1.6;
-}
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 10px;
+            background: #2463a6;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-.subtitulo {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 25px;
-}
+        button:hover {
+            background: #17365d;
+        }
 
-button {
-    width: 100%;
-    padding: 15px;
-    margin-top: 12px;
-    border: none;
-    border-radius: 10px;
-    background: #2463a6;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid #f0b429;
+            outline-offset: 3px;
+        }
 
-button:hover {
-    background: #17365d;
-}
+        .emergencia {
+            background: #d62828;
+        }
 
-button:focus-visible {
-    outline: 3px solid #f0b429;
-    outline-offset: 3px;
-}
+        .emergencia:hover {
+            background: #a61b1b;
+        }
 
-.emergencia {
-    background: #d62828;
-}
+        .volver {
+            background: #777;
+        }
 
-.emergencia:hover {
-    background: #a61b1b;
-}
+        .volver:hover {
+            background: #555;
+        }
 
-.volver {
-    background: #777;
-}
+        .modo-boton {
+            background: #475569;
+            margin-bottom: 15px;
+        }
 
-.volver:hover {
-    background: #555;
-}
+        .modo-boton:hover {
+            background: #334155;
+        }
 
-input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background: white;
+            color: #333;
+        }
 
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
+        label {
+            display: block;
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
 
-.pantalla {
-    display: none;
-}
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-.activa {
-    display: block;
-}
+        .pantalla {
+            display: none;
+        }
 
-/* CONTADOR DE REPORTES */
+        .pantalla.activa {
+            display: block;
+        }
 
-.contador {
-    background: #e8f2ff;
-    padding: 20px;
-    border-radius: 15px;
-    margin: 20px 0;
-    border: 2px solid #2463a6;
-}
+        /* CONTADOR DE REPORTES */
 
-.contador h3 {
-    font-size: 17px;
-    margin-top: 0;
-}
+        .contador {
+            background: #e8f2ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #2463a6;
+        }
 
-.contador span {
-    display: block;
-    font-size: 38px;
-    font-weight: bold;
-    color: #2463a6;
-    margin: 10px 0;
-}
+        .contador h3 {
+            font-size: 17px;
+            margin-top: 0;
+        }
 
-.contador p {
-    font-size: 13px;
-    margin-bottom: 0;
-}
+        .contador span {
+            display: block;
+            font-size: 38px;
+            font-weight: bold;
+            color: #2463a6;
+            margin: 10px 0;
+        }
 
-/* TARJETAS DE REPORTES */
+        .contador p {
+            font-size: 13px;
+            margin-bottom: 0;
+        }
 
-.tarjeta {
-    background: #f0f6ff;
-    border-left: 5px solid #2463a6;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 10px;
-    text-align: left;
-    overflow-wrap: anywhere;
-}
+        /* TARJETAS */
 
-.tarjeta h3 {
-    font-size: 16px;
-    margin-top: 0;
-}
+        .tarjeta {
+            background: #f0f6ff;
+            border-left: 5px solid #2463a6;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
 
-.tarjeta p {
-    font-size: 14px;
-    margin: 6px 0;
-}
+        .tarjeta h3 {
+            font-size: 16px;
+            margin-top: 0;
+        }
 
-.tarjeta small {
-    color: #777;
-}
+        .tarjeta p {
+            font-size: 14px;
+            margin: 6px 0;
+        }
 
-/* ESTADO DEL REPORTE */
+        .tarjeta small {
+            color: #777;
+        }
 
-.estado {
-    display: inline-block;
-    background: #fff1c2;
-    color: #8a6000;
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-top: 10px;
-    font-size: 13px;
-    font-weight: bold;
-}
+        /* ESTADO DEL REPORTE */
 
-/* AVISOS */
+        .estado {
+            display: inline-block;
+            background: #fff1c2;
+            color: #8a6000;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: bold;
+        }
 
-.aviso {
-    background: #fff4db;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
-    font-size: 14px;
-    color: #775000;
-}
+        /* AVISOS */
 
-/* CONSEJOS */
+        .aviso {
+            background: #fff4db;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #775000;
+            line-height: 1.6;
+        }
 
-.consejo {
-    background: #edf7ed;
-    padding: 15px;
-    margin-top: 12px;
-    border-radius: 10px;
-    text-align: left;
-    color: #245c36;
-}
+        /* CONSEJOS */
 
-/* MAPA */
+        .consejo {
+            background: #edf7ed;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 10px;
+            text-align: left;
+            color: #245c36;
+            line-height: 1.6;
+        }
 
-.mapa-contenedor {
-    margin-top: 15px;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #ddd;
-}
+        /* MAPA */
 
-.mapa-contenedor iframe {
-    width: 100%;
-    height: 300px;
-    border: none;
-    display: block;
-}
+        .mapa-contenedor {
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
 
-/* PIE DE PÁGINA */
+        .mapa-contenedor iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            display: block;
+        }
 
-.footer {
-    margin-top: 25px;
-    font-size: 12px;
-    color: #888;
-}
+        /* FILTROS */
 
-.footer p {
-    font-size: 12px;
-}
+        .filtro-contenedor {
+            background: #eef4fb;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
 
-</style>
+        .filtro-contenedor h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
 
+        /* PIE DE PÁGINA */
+
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer p {
+            font-size: 12px;
+        }
+
+        /* ========================== */
+        /*         MODO OSCURO        */
+        /* ========================== */
+
+        body.modo-oscuro {
+            background: #121826;
+            color: white;
+        }
+
+        body.modo-oscuro .app {
+            background: #1e293b;
+            box-shadow: 0 5px 25px #080d16;
+        }
+
+        body.modo-oscuro h1,
+        body.modo-oscuro h2,
+        body.modo-oscuro h3 {
+            color: #ffffff;
+        }
+
+        body.modo-oscuro p,
+        body.modo-oscuro .subtitulo {
+            color: #d1d5db;
+        }
+
+        body.modo-oscuro .contador,
+        body.modo-oscuro .tarjeta {
+            background: #334155;
+            border-color: #60a5fa;
+        }
+
+        body.modo-oscuro .contador span {
+            color: #93c5fd;
+        }
+
+        body.modo-oscuro input,
+        body.modo-oscuro select,
+        body.modo-oscuro textarea {
+            background: #334155;
+            color: white;
+            border-color: #64748b;
+        }
+
+        body.modo-oscuro input::placeholder,
+        body.modo-oscuro textarea::placeholder {
+            color: #cbd5e1;
+        }
+
+        body.modo-oscuro .aviso {
+            background: #55451e;
+            color: #fff3cd;
+        }
+
+        body.modo-oscuro .consejo {
+            background: #254634;
+            color: #d1fae5;
+        }
+
+        body.modo-oscuro .estado {
+            background: #5c4719;
+            color: #fff3cd;
+        }
+
+        body.modo-oscuro .filtro-contenedor {
+            background: #334155;
+        }
+
+        body.modo-oscuro .footer,
+        body.modo-oscuro .footer p,
+        body.modo-oscuro .tarjeta small {
+            color: #cbd5e1;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .app {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="app">
+    <div class="app">
 
-    <h1>🛡️ Alerta Vecinal Segura SJL</h1>
+        <h1>🛡️ Alerta Vecinal Segura SJL</h1>
 
-    <p class="subtitulo">
-        Tu seguridad, nuestra prioridad
-    </p>
-
-
-    <!-- MENÚ PRINCIPAL -->
-
-    <div id="inicio" class="pantalla activa">
-
-        <h2>Menú principal</h2>
-
-        <p>
-            Bienvenido a nuestra plataforma
-            de seguridad vecinal.
+        <p class="subtitulo">
+            Tu seguridad, nuestra prioridad
         </p>
 
-        <!-- CONTADOR -->
+        <!-- MENÚ PRINCIPAL -->
 
-        <div class="contador">
+        <div id="inicio" class="pantalla activa">
 
-            <h3>📊 Reportes registrados</h3>
+            <h2>Menú principal</h2>
 
-            <span id="totalReportes">0</span>
+            <button
+                id="botonModoOscuro"
+                class="modo-boton"
+                onclick="cambiarModoOscuro()">
+                🌙 Activar modo oscuro
+            </button>
 
             <p>
-                Reportes guardados en este dispositivo
+                Bienvenido a nuestra plataforma
+                de seguridad vecinal.
+            </p>
+
+            <!-- CONTADOR -->
+
+            <div class="contador">
+
+                <h3>📊 Reportes registrados</h3>
+
+                <span id="totalReportes">0</span>
+
+                <p>
+                    Reportes guardados en este dispositivo
+                </p>
+
+            </div>
+
+            <button
+                class="emergencia"
+                onclick="mostrar('alerta')">
+                🚨 Enviar alerta
+            </button>
+
+            <!-- NUEVA FUNCIÓN: LLAMADA RÁPIDA -->
+
+            <button
+                class="emergencia"
+                onclick="llamarPolicia()">
+                📞 Llamar a la Policía Nacional - 105
+            </button>
+
+            <button onclick="mostrar('reporte')">
+                📍 Reportar zona insegura
+            </button>
+
+            <button onclick="mostrar('historial')">
+                📋 Historial de reportes
+            </button>
+
+            <button onclick="mostrar('mapa')">
+                🗺️ Mapa de zonas inseguras
+            </button>
+
+            <button onclick="mostrar('notificaciones')">
+                🔔 Notificaciones
+            </button>
+
+            <button onclick="mostrar('consejos')">
+                🛡️ Consejos de seguridad
+            </button>
+
+            <div class="aviso">
+                Esta plataforma es un prototipo educativo.
+                Las alertas y reportes son demostrativos.
+                No se envían a los servicios de emergencia.
+                El botón de llamada rápida es un acceso
+                al marcador telefónico.
+            </div>
+
+        </div>
+
+        <!-- ALERTA DE EMERGENCIA -->
+
+        <div id="alerta" class="pantalla">
+
+            <h2>🚨 Alerta de emergencia</h2>
+
+            <p>
+                Esta opción permite simular una alerta
+                ante una situación de peligro.
+            </p>
+
+            <div class="aviso">
+                ⚠️ Esta función es una demostración.
+                No envía avisos a la Policía Nacional
+                ni al serenazgo.
+            </div>
+
+            <button
+                class="emergencia"
+                onclick="simularAlerta()">
+                🚨 Confirmar alerta de prueba
+            </button>
+
+            <button
+                class="volver"
+                onclick="mostrar('inicio')">
+                Volver al inicio
+            </button>
+
+        </div>
+
+        <!-- REPORTAR ZONA INSEGURA -->
+
+        <div id="reporte" class="pantalla">
+
+            <h2>📍 Reportar zona insegura</h2>
+
+            <p>
+                Registra un lugar que consideres
+                que necesita mayor atención.
+            </p>
+
+            <label for="ubicacion">
+                Ubicación
+            </label>
+
+            <input
+                id="ubicacion"
+                type="text"
+                maxlength="150"
+                placeholder="Ejemplo: Av. Canto Grande, SJL">
+
+            <label for="problema">
+                Tipo de problema
+            </label>
+
+            <select id="problema">
+
+                <option value="Falta de iluminación">
+                    Falta de iluminación
+                </option>
+
+                <option value="Falta de vigilancia">
+                    Falta de vigilancia
+                </option>
+
+                <option value="Zona con robos reportados">
+                    Zona con robos reportados
+                </option>
+
+                <option value="Personas sospechosas">
+                    Personas sospechosas
+                </option>
+
+                <option value="Otro problema">
+                    Otro problema
+                </option>
+
+            </select>
+
+            <label for="descripcion">
+                Descripción
+            </label>
+
+            <textarea
+                id="descripcion"
+                maxlength="500"
+                placeholder="Describe brevemente la situación">
+            </textarea>
+
+            <button onclick="enviarReporte()">
+                📤 Guardar reporte
+            </button>
+
+            <button
+                class="volver"
+                onclick="mostrar('inicio')">
+                Volver al inicio
+            </button>
+
+        </div>
+
+        <!-- HISTORIAL DE REPORTES -->
+
+        <div id="historial" class="pantalla">
+
+            <h2>📋 Historial de reportes</h2>
+
+            <p>
+                Aquí podrás consultar los reportes
+                registrados en este dispositivo.
+            </p>
+
+            <!-- NUEVA FUNCIÓN: FILTROS -->
+
+            <div class="filtro-contenedor">
+
+                <h3>🔎 Filtrar por tipo de incidente</h3>
+
+                <label for="filtroReportes">
+                    Selecciona el problema:
+                </label>
+
+                <select
+                    id="filtroReportes"
+                    onchange="mostrarReportes()">
+
+                    <option value="todos">
+                        Todos los reportes
+                    </option>
+
+                    <option value="Falta de iluminación">
+                        Falta de iluminación
+                    </option>
+
+                    <option value="Falta de vigilancia">
+                        Falta de vigilancia
+                    </option>
+
+                    <option value="Zona con robos reportados">
+                        Zona con robos reportados
+                    </option>
+
+                    <option value="Personas sospechosas">
+                        Personas sospechosas
+                    </option>
+
+                    <option value="Otro problema">
+                        Otro problema
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div id="listaReportes"></div>
+
+            <button
+                class="volver"
+                onclick="mostrar('inicio')">
+                Volver al inicio
+            </button>
+
+        </div>
+
+        <!-- MAPA DE ZONAS INSEGURAS -->
+
+        <div id="mapa" class="pantalla">
+
+            <h2>🗺️ Mapa de zonas inseguras</h2>
+
+            <p>
+                Visualiza un mapa referencial de
+                San Juan de Lurigancho.
+            </p>
+
+            <div class="mapa-contenedor">
+
+                <iframe
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-77.055%2C-12.035%2C-76.915%2C-11.915&amp;layer=mapnik"
+                    title="Mapa referencial de San Juan de Lurigancho"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+            <h3>📍 Zonas reportadas</h3>
+
+            <div id="zonasMapa"></div>
+
+            <div class="aviso">
+                Este mapa es referencial.
+                Los reportes aparecen en la lista inferior,
+                pero todavía no se muestran como
+                marcadores dentro del mapa.
+            </div>
+
+            <button
+                class="volver"
+                onclick="mostrar('inicio')">
+                Volver al inicio
+            </button>
+
+        </div>
+
+        <!-- NOTIFICACIONES -->
+
+        <div id="notificaciones" class="pantalla">
+
+            <h2>🔔 Notificaciones</h2>
+
+            <p>
+                Consulta los avisos de prueba relacionados
+                con los reportes registrados.
+            </p>
+
+            <div id="listaNotificaciones"></div>
+
+            <button
+                class="volver"
+                onclick="mostrar('inicio')">
+                Volver al inicio
+            </button>
+
+        </div>
+
+        <!-- CONSEJOS DE SEGURIDAD -->
+
+        <div id="consejos" class="pantalla">
+
+            <h2>🛡️ Consejos de seguridad</h2>
+
+            <p>
+                Pequeñas acciones que pueden ayudarnos
+                a prevenir situaciones de riesgo.
+            </p>
+
+            <div class="consejo">
+                📱 Evita utilizar tu celular en lugares
+                donde puedas exponerte a un robo.
+            </div>
+
+            <div class="consejo">
+                💡 Procura caminar por calles
+                iluminadas y transitadas.
+            </div>
+
+            <div class="consejo">
+                👥 Mantente comunicado con tus familiares
+                cuando regreses tarde a casa.
+            </div>
+
+            <div class="consejo">
+                🚨 Si observas una situación peligrosa,
+                evita intervenir directamente y busca ayuda.
+            </div>
+
+            <div class="consejo">
+                🤝 Participa en las actividades de
+                prevención y organización de tu comunidad.
+            </div>
+
+            <button
+                class="volver"
+                onclick="mostrar('inicio')">
+                Volver al inicio
+            </button>
+
+        </div>
+
+        <!-- PIE DE PÁGINA -->
+
+        <div class="footer">
+
+            <p>
+                Proyecto académico de Creatividad e Innovación
+            </p>
+
+            <p>
+                Grupo N.º 6 | San Juan de Lurigancho
+            </p>
+
+            <p>
+                Prototipo educativo - 2026
             </p>
 
         </div>
 
-
-        <button class="emergencia"
-        onclick="mostrar('alerta')">
-            🚨 Enviar alerta
-        </button>
-
-        <button onclick="mostrar('reporte')">
-            📍 Reportar zona insegura
-        </button>
-
-        <button onclick="mostrar('historial')">
-            📋 Historial de reportes
-        </button>
-
-        <button onclick="mostrar('mapa')">
-            🗺️ Mapa de zonas inseguras
-        </button>
-
-        <button onclick="mostrar('notificaciones')">
-            🔔 Notificaciones
-        </button>
-
-        <button onclick="mostrar('consejos')">
-            🛡️ Consejos de seguridad
-        </button>
-
-
-        <div class="aviso">
-            Esta plataforma es un prototipo educativo.
-            No está conectada con servicios de emergencia.
-        </div>
-
     </div>
 
+    <script>
 
-    <!-- ALERTA DE EMERGENCIA -->
+        // ============================
+        // CAMBIAR ENTRE PANTALLAS
+        // ============================
 
-    <div id="alerta" class="pantalla">
+        function mostrar(id) {
 
-        <h2>🚨 Alerta de emergencia</h2>
+            document.querySelectorAll(".pantalla")
+                .forEach(function(pantalla) {
 
-        <p>
-            Esta opción permite simular una alerta
-            ante una situación de peligro.
-        </p>
+                    pantalla.classList.remove("activa");
 
-        <div class="aviso">
-            ⚠️ Esta función es una demostración.
-            No envía avisos a la policía ni al serenazgo.
-        </div>
+                });
 
-        <button class="emergencia"
-        onclick="simularAlerta()">
-            🚨 Confirmar alerta
-        </button>
+            document.getElementById(id)
+                .classList.add("activa");
 
-        <button class="volver"
-        onclick="mostrar('inicio')">
-            Volver al inicio
-        </button>
+            if (id === "inicio") {
+                actualizarContador();
+            }
 
-    </div>
+            if (id === "historial") {
+                mostrarReportes();
+            }
 
+            if (id === "mapa") {
+                mostrarZonasMapa();
+            }
 
-    <!-- REPORTAR ZONA INSEGURA -->
+            if (id === "notificaciones") {
+                mostrarNotificaciones();
+            }
 
-    <div id="reporte" class="pantalla">
+            window.scrollTo(0, 0);
+        }
 
-        <h2>📍 Reportar zona insegura</h2>
 
-        <p>
-            Registra un lugar que consideres
-            que necesita mayor atención.
-        </p>
+        // ============================
+        // MODO OSCURO
+        // ============================
 
-        <label for="ubicacion">Ubicación</label>
+        function cambiarModoOscuro() {
 
-        <input
-        id="ubicacion"
-        type="text"
-        maxlength="150"
-        placeholder="Escribe la ubicación">
+            document.body.classList.toggle("modo-oscuro");
 
-        <label for="problema">Tipo de problema</label>
+            let oscuro = document.body.classList.contains(
+                "modo-oscuro"
+            );
 
-        <select id="problema">
+            try {
 
-            <option value="Falta de iluminación">
-                Falta de iluminación
-            </option>
+                localStorage.setItem(
+                    "modoOscuroSJL",
+                    oscuro ? "si" : "no"
+                );
 
-            <option value="Falta de vigilancia">
-                Falta de vigilancia
-            </option>
+            } catch (error) {
 
-            <option value="Zona con robos reportados">
-                Zona con robos reportados
-            </option>
+                console.log(
+                    "No se pudo guardar la preferencia."
+                );
 
-            <option value="Personas sospechosas">
-                Personas sospechosas
-            </option>
+            }
 
-            <option value="Otro problema">
-                Otro problema
-            </option>
+            actualizarBotonModoOscuro();
+        }
 
-        </select>
 
-        <label for="descripcion">Descripción</label>
+        function actualizarBotonModoOscuro() {
 
-        <textarea
-        id="descripcion"
-        maxlength="500"
-        placeholder="Describe brevemente la situación"></textarea>
+            let boton = document.getElementById(
+                "botonModoOscuro"
+            );
 
-        <button onclick="enviarReporte()">
-            📤 Guardar reporte
-        </button>
+            if (!boton) {
+                return;
+            }
 
-        <button class="volver"
-        onclick="mostrar('inicio')">
-            Volver al inicio
-        </button>
+            if (document.body.classList.contains("modo-oscuro")) {
 
-    </div>
+                boton.textContent =
+                    "☀️ Activar modo claro";
 
+            } else {
 
-    <!-- HISTORIAL DE REPORTES -->
+                boton.textContent =
+                    "🌙 Activar modo oscuro";
 
-    <div id="historial" class="pantalla">
+            }
+        }
 
-        <h2>📋 Historial de reportes</h2>
 
-        <p>
-            Aquí podrás consultar los reportes
-            registrados en este dispositivo.
-        </p>
+        // ============================
+        // LLAMADA RÁPIDA
+        // ============================
 
-        <div id="listaReportes"></div>
+        function llamarPolicia() {
 
-        <button class="volver"
-        onclick="mostrar('inicio')">
-            Volver al inicio
-        </button>
+            let confirmar = confirm(
+                "¿Deseas abrir el marcador telefónico " +
+                "para llamar a la Policía Nacional (105)?\n\n" +
+                "Utiliza esta opción únicamente " +
+                "cuando necesites comunicarte " +
+                "con la Policía Nacional."
+            );
 
-    </div>
+            if (confirmar) {
 
+                window.location.href = "tel:105";
 
-    <!-- MAPA DE ZONAS INSEGURAS -->
+            }
+        }
 
-    <div id="mapa" class="pantalla">
 
-        <h2>🗺️ Mapa de zonas inseguras</h2>
+        // ============================
+        // ALERTA SIMULADA
+        // ============================
 
-        <p>
-            Visualiza un mapa referencial de
-            San Juan de Lurigancho.
-        </p>
+        function simularAlerta() {
 
-        <div class="mapa-contenedor">
+            let confirmar = confirm(
+                "SIMULACIÓN: ¿Deseas activar " +
+                "una alerta de prueba?"
+            );
 
-            <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-77.055%2C-12.035%2C-76.915%2C-11.915&amp;layer=mapnik"
-                title="Mapa referencial de San Juan de Lurigancho"
-                loading="lazy">
-            </iframe>
+            if (confirmar) {
 
-        </div>
+                alert(
+                    "🚨 ALERTA DE PRUEBA ACTIVADA.\n\n" +
+                    "Esta acción es únicamente una simulación.\n" +
+                    "No se ha contactado a ninguna autoridad."
+                );
 
-        <h3>📍 Zonas reportadas</h3>
+                mostrar("inicio");
 
-        <div id="zonasMapa"></div>
+            }
+        }
 
-        <div class="aviso">
-            Este mapa es referencial.
-            Los reportes aparecen en la lista inferior,
-            pero todavía no se muestran como
-            marcadores dentro del mapa.
-        </div>
 
-        <button class="volver"
-        onclick="mostrar('inicio')">
-            Volver al inicio
-        </button>
+        // ============================
+        // OBTENER REPORTES
+        // ============================
 
-    </div>
+        function obtenerReportes() {
 
+            try {
 
-    <!-- NOTIFICACIONES -->
+                let datos = JSON.parse(
+                    localStorage.getItem("reportesSJL") || "[]"
+                );
 
-    <div id="notificaciones" class="pantalla">
+                return Array.isArray(datos) ? datos : [];
 
-        <h2>🔔 Notificaciones</h2>
+            } catch (error) {
 
-        <p>
-            Consulta los avisos de prueba relacionados
-            con los reportes registrados.
-        </p>
+                return [];
 
-        <div id="listaNotificaciones"></div>
+            }
+        }
 
-        <button class="volver"
-        onclick="mostrar('inicio')">
-            Volver al inicio
-        </button>
 
-    </div>
+        // ============================
+        // GUARDAR NUEVO REPORTE
+        // ============================
 
+        function enviarReporte() {
 
-    <!-- CONSEJOS DE SEGURIDAD -->
+            let ubicacion = document.getElementById(
+                "ubicacion"
+            ).value.trim();
 
-    <div id="consejos" class="pantalla">
+            let problema = document.getElementById(
+                "problema"
+            ).value;
 
-        <h2>🛡️ Consejos de seguridad</h2>
+            let descripcion = document.getElementById(
+                "descripcion"
+            ).value.trim();
 
-        <p>
-            Pequeñas acciones que pueden ayudarnos
-            a prevenir situaciones de riesgo.
-        </p>
+            if (ubicacion === "" || descripcion === "") {
 
-        <div class="consejo">
-            📱 Evita utilizar tu celular en lugares
-            donde puedas exponerte a un robo.
-        </div>
+                alert(
+                    "Por favor, completa la ubicación " +
+                    "y la descripción."
+                );
 
-        <div class="consejo">
-            💡 Procura caminar por calles
-            iluminadas y transitadas.
-        </div>
+                return;
+            }
 
-        <div class="consejo">
-            👥 Mantente comunicado con tus familiares
-            cuando regreses tarde a casa.
-        </div>
+            let reportes = obtenerReportes();
 
-        <div class="consejo">
-            🚨 Si observas una situación peligrosa,
-            evita intervenir directamente y busca ayuda.
-        </div>
+            let numeroMayor = reportes.reduce(
+                function(maximo, reporte, indice) {
 
-        <div class="consejo">
-            🤝 Participa en las actividades de
-            prevención y organización de tu comunidad.
-        </div>
+                    return Math.max(
+                        maximo,
+                        Number(reporte.numero) || (indice + 1)
+                    );
 
-        <button class="volver"
-        onclick="mostrar('inicio')">
-            Volver al inicio
-        </button>
+                }, 0
+            );
 
-    </div>
+            let nuevoReporte = {
 
+                numero: numeroMayor + 1,
 
-    <!-- PIE DE PÁGINA -->
+                ubicacion: ubicacion,
 
-    <div class="footer">
+                problema: problema,
 
-        <p>
-            Proyecto académico de Creatividad e Innovación
-        </p>
+                descripcion: descripcion,
 
-        <p>
-            Grupo N.º 6 | San Juan de Lurigancho
-        </p>
+                fecha: new Date().toLocaleString("es-PE"),
 
-        <p>
-            Prototipo educativo - 2026
-        </p>
+                estado: "Pendiente de revisión (simulado)"
 
-    </div>
+            };
 
-</div>
+            reportes.push(nuevoReporte);
 
+            try {
 
-<script>
+                localStorage.setItem(
+                    "reportesSJL",
+                    JSON.stringify(reportes)
+                );
 
-// CAMBIAR ENTRE PANTALLAS
+            } catch (error) {
 
-function mostrar(id) {
+                alert(
+                    "No se pudo guardar el reporte " +
+                    "en este navegador."
+                );
 
-    document.querySelectorAll(".pantalla")
-    .forEach(function(pantalla) {
+                return;
+            }
 
-        pantalla.classList.remove("activa");
+            alert(
+                "✅ Reporte guardado correctamente.\n\n" +
+                "Número de reporte: " +
+                String(nuevoReporte.numero).padStart(3, "0") +
+                "\n\nPuedes consultarlo en el historial." +
+                "\n\nNo se ha enviado a ninguna autoridad."
+            );
 
-    });
+            document.getElementById(
+                "ubicacion"
+            ).value = "";
 
-    document.getElementById(id)
-    .classList.add("activa");
+            document.getElementById(
+                "descripcion"
+            ).value = "";
 
+            document.getElementById(
+                "problema"
+            ).selectedIndex = 0;
 
-    if (id === "inicio") {
-        actualizarContador();
-    }
+            // Restablecer el filtro para ver el nuevo reporte
 
-    if (id === "historial") {
-        mostrarReportes();
-    }
+            document.getElementById(
+                "filtroReportes"
+            ).value = "todos";
 
-    if (id === "mapa") {
-        mostrarZonasMapa();
-    }
+            actualizarContador();
 
-    if (id === "notificaciones") {
-        mostrarNotificaciones();
-    }
+            mostrar("historial");
+        }
 
-    window.scrollTo(0, 0);
 
-}
+        // ============================
+        // ACTUALIZAR CONTADOR
+        // ============================
 
+        function actualizarContador() {
 
-// SIMULAR ALERTA DE EMERGENCIA
+            let reportes = obtenerReportes();
 
-function simularAlerta() {
+            let contador = document.getElementById(
+                "totalReportes"
+            );
 
-    let confirmar = confirm(
-        "SIMULACIÓN: ¿Deseas activar una alerta de prueba?"
-    );
+            if (contador) {
 
-    if (confirmar) {
+                contador.textContent = reportes.length;
 
-        alert(
-            "🚨 ALERTA DE PRUEBA ACTIVADA.\n\n" +
-            "Esta acción es únicamente una simulación.\n" +
-            "No se ha contactado a ninguna autoridad."
+            }
+        }
+
+
+        // ============================
+        // HISTORIAL CON FILTROS
+        // ============================
+
+        function mostrarReportes() {
+
+            let todosLosReportes = obtenerReportes();
+
+            let reportes = todosLosReportes.slice();
+
+            let filtro = document.getElementById(
+                "filtroReportes"
+            ).value;
+
+            // Aplicar filtro por tipo de incidente
+
+            if (filtro !== "todos") {
+
+                reportes = reportes.filter(
+                    function(reporte) {
+
+                        return reporte.problema === filtro;
+
+                    }
+                );
+
+            }
+
+            let contenedor = document.getElementById(
+                "listaReportes"
+            );
+
+            contenedor.innerHTML = "";
+
+            if (reportes.length === 0) {
+
+                let mensaje = document.createElement("p");
+
+                mensaje.textContent =
+                    filtro === "todos"
+                    ? "📋 Todavía no tienes reportes registrados."
+                    : "🔎 No se encontraron reportes con este filtro.";
+
+                contenedor.appendChild(mensaje);
+
+                return;
+            }
+
+            reportes.slice().reverse().forEach(
+                function(reporte, indice) {
+
+                    let tarjeta = document.createElement("div");
+
+                    tarjeta.className = "tarjeta";
+
+                    let titulo = document.createElement("h3");
+
+                    let numero = reporte.numero ||
+                        (reportes.length - indice);
+
+                    titulo.textContent =
+                        "📋 Reporte N.° " +
+                        String(numero).padStart(3, "0");
+
+                    let ubicacion = document.createElement("p");
+
+                    ubicacion.textContent =
+                        "📍 Ubicación: " + reporte.ubicacion;
+
+                    let problema = document.createElement("p");
+
+                    problema.textContent =
+                        "⚠️ Problema: " + reporte.problema;
+
+                    let descripcion = document.createElement("p");
+
+                    descripcion.textContent =
+                        "📝 Descripción: " + reporte.descripcion;
+
+                    let fecha = document.createElement("p");
+
+                    fecha.textContent =
+                        "📅 Fecha: " + reporte.fecha;
+
+                    let estado = document.createElement("div");
+
+                    estado.className = "estado";
+
+                    estado.textContent =
+                        "🟡 Estado: " +
+                        (reporte.estado ||
+                        "Pendiente de revisión (simulado)");
+
+                    tarjeta.append(
+                        titulo,
+                        ubicacion,
+                        problema,
+                        descripcion,
+                        fecha,
+                        estado
+                    );
+
+                    contenedor.appendChild(tarjeta);
+
+                }
+            );
+        }
+
+
+        // ============================
+        // MOSTRAR ZONAS REPORTADAS
+        // ============================
+
+        function mostrarZonasMapa() {
+
+            let reportes = obtenerReportes();
+
+            let contenedor = document.getElementById(
+                "zonasMapa"
+            );
+
+            contenedor.innerHTML = "";
+
+            if (reportes.length === 0) {
+
+                contenedor.textContent =
+                    "Todavía no hay zonas reportadas.";
+
+                return;
+            }
+
+            reportes.slice().reverse().forEach(
+                function(reporte) {
+
+                    let tarjeta = document.createElement("div");
+
+                    tarjeta.className = "tarjeta";
+
+                    let titulo = document.createElement("h3");
+
+                    titulo.textContent =
+                        "📍 " + reporte.ubicacion;
+
+                    let problema = document.createElement("p");
+
+                    problema.textContent =
+                        "⚠️ Problema: " + reporte.problema;
+
+                    let descripcion = document.createElement("p");
+
+                    descripcion.textContent =
+                        "📝 " + reporte.descripcion;
+
+                    tarjeta.append(
+                        titulo,
+                        problema,
+                        descripcion
+                    );
+
+                    contenedor.appendChild(tarjeta);
+
+                }
+            );
+        }
+
+
+        // ============================
+        // MOSTRAR NOTIFICACIONES
+        // ============================
+
+        function mostrarNotificaciones() {
+
+            let reportes = obtenerReportes();
+
+            let contenedor = document.getElementById(
+                "listaNotificaciones"
+            );
+
+            contenedor.innerHTML = "";
+
+            if (reportes.length === 0) {
+
+                let aviso = document.createElement("div");
+
+                aviso.className = "aviso";
+
+                aviso.textContent =
+                    "Todavía no hay notificaciones registradas.";
+
+                contenedor.appendChild(aviso);
+
+                return;
+            }
+
+            reportes.slice().reverse().forEach(
+                function(reporte) {
+
+                    let tarjeta = document.createElement("div");
+
+                    tarjeta.className = "tarjeta";
+
+                    let titulo = document.createElement("h3");
+
+                    titulo.textContent =
+                        "⚠️ Aviso de prueba: " +
+                        reporte.problema;
+
+                    let ubicacion = document.createElement("p");
+
+                    ubicacion.textContent =
+                        "📍 Lugar: " + reporte.ubicacion;
+
+                    let fecha = document.createElement("small");
+
+                    fecha.textContent = reporte.fecha;
+
+                    tarjeta.append(
+                        titulo,
+                        ubicacion,
+                        fecha
+                    );
+
+                    contenedor.appendChild(tarjeta);
+
+                }
+            );
+        }
+
+
+        // ============================
+        // INICIAR APLICACIÓN
+        // ============================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                // Recuperar modo oscuro
+
+                try {
+
+                    if (
+                        localStorage.getItem("modoOscuroSJL")
+                        === "si"
+                    ) {
+
+                        document.body.classList.add(
+                            "modo-oscuro"
+                        );
+
+                    }
+
+                } catch (error) {
+
+                    console.log(
+                        "No se pudo recuperar el modo oscuro."
+                    );
+
+                }
+
+                actualizarBotonModoOscuro();
+
+                actualizarContador();
+
+                mostrarReportes();
+
+                mostrarZonasMapa();
+
+                mostrarNotificaciones();
+
+            }
         );
 
-        mostrar("inicio");
-
-    }
-
-}
-
-
-// OBTENER REPORTES GUARDADOS
-
-function obtenerReportes() {
-
-    try {
-
-        const datos = JSON.parse(
-            localStorage.getItem("reportesSJL") || "[]"
-        );
-
-        return Array.isArray(datos) ? datos : [];
-
-    } catch (error) {
-
-        return [];
-
-    }
-
-}
-
-
-// GUARDAR NUEVO REPORTE
-
-function enviarReporte() {
-
-    let ubicacion =
-        document.getElementById("ubicacion").value.trim();
-
-    let problema =
-        document.getElementById("problema").value;
-
-    let descripcion =
-        document.getElementById("descripcion").value.trim();
-
-
-    if (ubicacion === "" || descripcion === "") {
-
-        alert(
-            "Por favor, completa la ubicación y la descripción."
-        );
-
-        return;
-
-    }
-
-
-    let reportes = obtenerReportes();
-
-
-    let numeroMayor = reportes.reduce(function(maximo, reporte, indice) {
-
-        return Math.max(
-            maximo,
-            Number(reporte.numero) || (indice + 1)
-        );
-
-    }, 0);
-
-
-    let nuevoReporte = {
-
-        numero: numeroMayor + 1,
-
-        ubicacion: ubicacion,
-
-        problema: problema,
-
-        descripcion: descripcion,
-
-        fecha: new Date().toLocaleString("es-PE"),
-
-        estado: "Pendiente de revisión (simulado)"
-
-    };
-
-
-    reportes.push(nuevoReporte);
-
-
-    try {
-
-        localStorage.setItem(
-            "reportesSJL",
-            JSON.stringify(reportes)
-        );
-
-    } catch (error) {
-
-        alert(
-            "No se pudo guardar el reporte en este navegador."
-        );
-
-        return;
-
-    }
-
-
-    alert(
-        "✅ Reporte guardado correctamente.\n\n" +
-        "Número de reporte: " +
-        String(nuevoReporte.numero).padStart(3, "0") +
-        "\n\nPuedes consultarlo en el historial." +
-        "\n\nNo se ha enviado a ninguna autoridad."
-    );
-
-
-    document.getElementById("ubicacion").value = "";
-
-    document.getElementById("descripcion").value = "";
-
-
-    actualizarContador();
-
-    mostrar("historial");
-
-}
-
-
-// ACTUALIZAR CONTADOR
-
-function actualizarContador() {
-
-    let reportes = obtenerReportes();
-
-    let contador =
-        document.getElementById("totalReportes");
-
-    if (contador) {
-
-        contador.textContent = reportes.length;
-
-    }
-
-}
-
-
-// MOSTRAR HISTORIAL DE REPORTES
-
-function mostrarReportes() {
-
-    let reportes = obtenerReportes();
-
-    let contenedor =
-        document.getElementById("listaReportes");
-
-    contenedor.innerHTML = "";
-
-
-    if (reportes.length === 0) {
-
-        contenedor.textContent =
-            "📋 Todavía no tienes reportes registrados.";
-
-        return;
-
-    }
-
-
-    reportes.slice().reverse().forEach(function(reporte, indice) {
-
-        let tarjeta = document.createElement("div");
-
-        tarjeta.className = "tarjeta";
-
-
-        let titulo = document.createElement("h3");
-
-        let numero = reporte.numero ||
-            (reportes.length - indice);
-
-        titulo.textContent =
-            "📋 Reporte N.° " +
-            String(numero).padStart(3, "0");
-
-
-        let ubicacion = document.createElement("p");
-
-        ubicacion.textContent =
-            "📍 Ubicación: " + reporte.ubicacion;
-
-
-        let problema = document.createElement("p");
-
-        problema.textContent =
-            "⚠️ Problema: " + reporte.problema;
-
-
-        let descripcion = document.createElement("p");
-
-        descripcion.textContent =
-            "📝 Descripción: " + reporte.descripcion;
-
-
-        let fecha = document.createElement("p");
-
-        fecha.textContent =
-            "📅 Fecha: " + reporte.fecha;
-
-
-        let estado = document.createElement("div");
-
-        estado.className = "estado";
-
-        estado.textContent =
-            "🟡 Estado: " +
-            (reporte.estado ||
-            "Pendiente de revisión (simulado)");
-
-
-        tarjeta.append(
-            titulo,
-            ubicacion,
-            problema,
-            descripcion,
-            fecha,
-            estado
-        );
-
-
-        contenedor.appendChild(tarjeta);
-
-    });
-
-}
-
-
-// MOSTRAR ZONAS EN EL MAPA
-
-function mostrarZonasMapa() {
-
-    let reportes = obtenerReportes();
-
-    let contenedor =
-        document.getElementById("zonasMapa");
-
-    contenedor.innerHTML = "";
-
-
-    if (reportes.length === 0) {
-
-        contenedor.textContent =
-            "Todavía no hay zonas reportadas.";
-
-        return;
-
-    }
-
-
-    reportes.slice().reverse().forEach(function(reporte) {
-
-        let tarjeta = document.createElement("div");
-
-        tarjeta.className = "tarjeta";
-
-
-        let titulo = document.createElement("h3");
-
-        titulo.textContent =
-            "📍 " + reporte.ubicacion;
-
-
-        let problema = document.createElement("p");
-
-        problema.textContent =
-            "⚠️ Problema: " + reporte.problema;
-
-
-        let descripcion = document.createElement("p");
-
-        descripcion.textContent =
-            "📝 " + reporte.descripcion;
-
-
-        tarjeta.append(
-            titulo,
-            problema,
-            descripcion
-        );
-
-
-        contenedor.appendChild(tarjeta);
-
-    });
-
-}
-
-
-// MOSTRAR NOTIFICACIONES
-
-function mostrarNotificaciones() {
-
-    let reportes = obtenerReportes();
-
-    let contenedor =
-        document.getElementById("listaNotificaciones");
-
-    contenedor.innerHTML = "";
-
-
-    if (reportes.length === 0) {
-
-        let aviso = document.createElement("div");
-
-        aviso.className = "aviso";
-
-        aviso.textContent =
-            "Todavía no hay notificaciones registradas.";
-
-        contenedor.appendChild(aviso);
-
-        return;
-
-    }
-
-
-    reportes.slice().reverse().forEach(function(reporte) {
-
-        let tarjeta = document.createElement("div");
-
-        tarjeta.className = "tarjeta";
-
-
-        let titulo = document.createElement("h3");
-
-        titulo.textContent =
-            "⚠️ Aviso de prueba: " + reporte.problema;
-
-
-        let ubicacion = document.createElement("p");
-
-        ubicacion.textContent =
-            "📍 Lugar: " + reporte.ubicacion;
-
-
-        let fecha = document.createElement("small");
-
-        fecha.textContent = reporte.fecha;
-
-
-        tarjeta.append(
-            titulo,
-            ubicacion,
-            fecha
-        );
-
-
-        contenedor.appendChild(tarjeta);
-
-    });
-
-}
-
-
-// CARGAR DATOS AL INICIAR
-
-document.addEventListener("DOMContentLoaded", function() {
-
-    actualizarContador();
-
-    mostrarReportes();
-
-    mostrarZonasMapa();
-
-    mostrarNotificaciones();
-
-});
-
-</script>
+    </script>
 
 </body>
-
 </html>
