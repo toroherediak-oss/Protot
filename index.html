@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Alerta Vecinal Segura SJL</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dce9f7, #eef3f8);
+    text-align: center;
+    margin: 0;
+    padding: 30px 15px;
+    min-height: 100vh;
+}
+
+.app {
+    background: white;
+    max-width: 430px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px #b8c7d8;
+}
+
+h1 {
+    color: #17365d;
+    font-size: 24px;
+}
+
+h2 {
+    color: #17365d;
+    font-size: 21px;
+}
+
+h3 {
+    color: #17365d;
+}
+
+p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.subtitulo {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #2463a6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #17365d;
+}
+
+button:focus-visible {
+    outline: 3px solid #f0b429;
+    outline-offset: 3px;
+}
+
+.emergencia {
+    background: #d62828;
+}
+
+.emergencia:hover {
+    background: #a61b1b;
+}
+
+.volver {
+    background: #777;
+}
+
+.volver:hover {
+    background: #555;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.pantalla {
+    display: none;
+}
+
+.activa {
+    display: block;
+}
+
+/* CONTADOR DE REPORTES */
+
+.contador {
+    background: #e8f2ff;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px solid #2463a6;
+}
+
+.contador h3 {
+    font-size: 17px;
+    margin-top: 0;
+}
+
+.contador span {
+    display: block;
+    font-size: 38px;
+    font-weight: bold;
+    color: #2463a6;
+    margin: 10px 0;
+}
+
+.contador p {
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+/* TARJETAS DE REPORTES */
+
+.tarjeta {
+    background: #f0f6ff;
+    border-left: 5px solid #2463a6;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.tarjeta h3 {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.tarjeta p {
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+.tarjeta small {
+    color: #777;
+}
+
+/* ESTADO DEL REPORTE */
+
+.estado {
+    display: inline-block;
+    background: #fff1c2;
+    color: #8a6000;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* AVISOS */
+
+.aviso {
+    background: #fff4db;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #775000;
+}
+
+/* CONSEJOS */
+
+.consejo {
+    background: #edf7ed;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 10px;
+    text-align: left;
+    color: #245c36;
+}
+
+/* MAPA */
+
+.mapa-contenedor {
+    margin-top: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.mapa-contenedor iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    display: block;
+}
+
+/* PIE DE PÁGINA */
+
+.footer {
+    margin-top: 25px;
+    font-size: 12px;
+    color: #888;
+}
+
+.footer p {
+    font-size: 12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <h1>🛡️ Alerta Vecinal Segura SJL</h1>
+
+    <p class="subtitulo">
+        Tu seguridad, nuestra prioridad
+    </p>
+
+
+    <!-- MENÚ PRINCIPAL -->
+
+    <div id="inicio" class="pantalla activa">
+
+        <h2>Menú principal</h2>
+
+        <p>
+            Bienvenido a nuestra plataforma
+            de seguridad vecinal.
+        </p>
+
+        <!-- CONTADOR -->
+
+        <div class="contador">
+
+            <h3>📊 Reportes registrados</h3>
+
+            <span id="totalReportes">0</span>
+
+            <p>
+                Reportes guardados en este dispositivo
+            </p>
+
+        </div>
+
+
+        <button class="emergencia"
+        onclick="mostrar('alerta')">
+            🚨 Enviar alerta
+        </button>
+
+        <button onclick="mostrar('reporte')">
+            📍 Reportar zona insegura
+        </button>
+
+        <button onclick="mostrar('historial')">
+            📋 Historial de reportes
+        </button>
+
+        <button onclick="mostrar('mapa')">
+            🗺️ Mapa de zonas inseguras
+        </button>
+
+        <button onclick="mostrar('notificaciones')">
+            🔔 Notificaciones
+        </button>
+
+        <button onclick="mostrar('consejos')">
+            🛡️ Consejos de seguridad
+        </button>
+
+
+        <div class="aviso">
+            Esta plataforma es un prototipo educativo.
+            No está conectada con servicios de emergencia.
+        </div>
+
+    </div>
+
+
+    <!-- ALERTA DE EMERGENCIA -->
+
+    <div id="alerta" class="pantalla">
+
+        <h2>🚨 Alerta de emergencia</h2>
+
+        <p>
+            Esta opción permite simular una alerta
+            ante una situación de peligro.
+        </p>
+
+        <div class="aviso">
+            ⚠️ Esta función es una demostración.
+            No envía avisos a la policía ni al serenazgo.
+        </div>
+
+        <button class="emergencia"
+        onclick="simularAlerta()">
+            🚨 Confirmar alerta
+        </button>
+
+        <button class="volver"
+        onclick="mostrar('inicio')">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <!-- REPORTAR ZONA INSEGURA -->
+
+    <div id="reporte" class="pantalla">
+
+        <h2>📍 Reportar zona insegura</h2>
+
+        <p>
+            Registra un lugar que consideres
+            que necesita mayor atención.
+        </p>
+
+        <label for="ubicacion">Ubicación</label>
+
+        <input
+        id="ubicacion"
+        type="text"
+        maxlength="150"
+        placeholder="Escribe la ubicación">
+
+        <label for="problema">Tipo de problema</label>
+
+        <select id="problema">
+
+            <option value="Falta de iluminación">
+                Falta de iluminación
+            </option>
+
+            <option value="Falta de vigilancia">
+                Falta de vigilancia
+            </option>
+
+            <option value="Zona con robos reportados">
+                Zona con robos reportados
+            </option>
+
+            <option value="Personas sospechosas">
+                Personas sospechosas
+            </option>
+
+            <option value="Otro problema">
+                Otro problema
+            </option>
+
+        </select>
+
+        <label for="descripcion">Descripción</label>
+
+        <textarea
+        id="descripcion"
+        maxlength="500"
+        placeholder="Describe brevemente la situación"></textarea>
+
+        <button onclick="enviarReporte()">
+            📤 Guardar reporte
+        </button>
+
+        <button class="volver"
+        onclick="mostrar('inicio')">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <!-- HISTORIAL DE REPORTES -->
+
+    <div id="historial" class="pantalla">
+
+        <h2>📋 Historial de reportes</h2>
+
+        <p>
+            Aquí podrás consultar los reportes
+            registrados en este dispositivo.
+        </p>
+
+        <div id="listaReportes"></div>
+
+        <button class="volver"
+        onclick="mostrar('inicio')">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <!-- MAPA DE ZONAS INSEGURAS -->
+
+    <div id="mapa" class="pantalla">
+
+        <h2>🗺️ Mapa de zonas inseguras</h2>
+
+        <p>
+            Visualiza un mapa referencial de
+            San Juan de Lurigancho.
+        </p>
+
+        <div class="mapa-contenedor">
+
+            <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-77.055%2C-12.035%2C-76.915%2C-11.915&amp;layer=mapnik"
+                title="Mapa referencial de San Juan de Lurigancho"
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+        <h3>📍 Zonas reportadas</h3>
+
+        <div id="zonasMapa"></div>
+
+        <div class="aviso">
+            Este mapa es referencial.
+            Los reportes aparecen en la lista inferior,
+            pero todavía no se muestran como
+            marcadores dentro del mapa.
+        </div>
+
+        <button class="volver"
+        onclick="mostrar('inicio')">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <!-- NOTIFICACIONES -->
+
+    <div id="notificaciones" class="pantalla">
+
+        <h2>🔔 Notificaciones</h2>
+
+        <p>
+            Consulta los avisos de prueba relacionados
+            con los reportes registrados.
+        </p>
+
+        <div id="listaNotificaciones"></div>
+
+        <button class="volver"
+        onclick="mostrar('inicio')">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <!-- CONSEJOS DE SEGURIDAD -->
+
+    <div id="consejos" class="pantalla">
+
+        <h2>🛡️ Consejos de seguridad</h2>
+
+        <p>
+            Pequeñas acciones que pueden ayudarnos
+            a prevenir situaciones de riesgo.
+        </p>
+
+        <div class="consejo">
+            📱 Evita utilizar tu celular en lugares
+            donde puedas exponerte a un robo.
+        </div>
+
+        <div class="consejo">
+            💡 Procura caminar por calles
+            iluminadas y transitadas.
+        </div>
+
+        <div class="consejo">
+            👥 Mantente comunicado con tus familiares
+            cuando regreses tarde a casa.
+        </div>
+
+        <div class="consejo">
+            🚨 Si observas una situación peligrosa,
+            evita intervenir directamente y busca ayuda.
+        </div>
+
+        <div class="consejo">
+            🤝 Participa en las actividades de
+            prevención y organización de tu comunidad.
+        </div>
+
+        <button class="volver"
+        onclick="mostrar('inicio')">
+            Volver al inicio
+        </button>
+
+    </div>
+
+
+    <!-- PIE DE PÁGINA -->
+
+    <div class="footer">
+
+        <p>
+            Proyecto académico de Creatividad e Innovación
+        </p>
+
+        <p>
+            Grupo N.º 6 | San Juan de Lurigancho
+        </p>
+
+        <p>
+            Prototipo educativo - 2026
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+// CAMBIAR ENTRE PANTALLAS
+
+function mostrar(id) {
+
+    document.querySelectorAll(".pantalla")
+    .forEach(function(pantalla) {
+
+        pantalla.classList.remove("activa");
+
+    });
+
+    document.getElementById(id)
+    .classList.add("activa");
+
+
+    if (id === "inicio") {
+        actualizarContador();
+    }
+
+    if (id === "historial") {
+        mostrarReportes();
+    }
+
+    if (id === "mapa") {
+        mostrarZonasMapa();
+    }
+
+    if (id === "notificaciones") {
+        mostrarNotificaciones();
+    }
+
+    window.scrollTo(0, 0);
+
+}
+
+
+// SIMULAR ALERTA DE EMERGENCIA
+
+function simularAlerta() {
+
+    let confirmar = confirm(
+        "SIMULACIÓN: ¿Deseas activar una alerta de prueba?"
+    );
+
+    if (confirmar) {
+
+        alert(
+            "🚨 ALERTA DE PRUEBA ACTIVADA.\n\n" +
+            "Esta acción es únicamente una simulación.\n" +
+            "No se ha contactado a ninguna autoridad."
+        );
+
+        mostrar("inicio");
+
+    }
+
+}
+
+
+// OBTENER REPORTES GUARDADOS
+
+function obtenerReportes() {
+
+    try {
+
+        const datos = JSON.parse(
+            localStorage.getItem("reportesSJL") || "[]"
+        );
+
+        return Array.isArray(datos) ? datos : [];
+
+    } catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+// GUARDAR NUEVO REPORTE
+
+function enviarReporte() {
+
+    let ubicacion =
+        document.getElementById("ubicacion").value.trim();
+
+    let problema =
+        document.getElementById("problema").value;
+
+    let descripcion =
+        document.getElementById("descripcion").value.trim();
+
+
+    if (ubicacion === "" || descripcion === "") {
+
+        alert(
+            "Por favor, completa la ubicación y la descripción."
+        );
+
+        return;
+
+    }
+
+
+    let reportes = obtenerReportes();
+
+
+    let numeroMayor = reportes.reduce(function(maximo, reporte, indice) {
+
+        return Math.max(
+            maximo,
+            Number(reporte.numero) || (indice + 1)
+        );
+
+    }, 0);
+
+
+    let nuevoReporte = {
+
+        numero: numeroMayor + 1,
+
+        ubicacion: ubicacion,
+
+        problema: problema,
+
+        descripcion: descripcion,
+
+        fecha: new Date().toLocaleString("es-PE"),
+
+        estado: "Pendiente de revisión (simulado)"
+
+    };
+
+
+    reportes.push(nuevoReporte);
+
+
+    try {
+
+        localStorage.setItem(
+            "reportesSJL",
+            JSON.stringify(reportes)
+        );
+
+    } catch (error) {
+
+        alert(
+            "No se pudo guardar el reporte en este navegador."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "✅ Reporte guardado correctamente.\n\n" +
+        "Número de reporte: " +
+        String(nuevoReporte.numero).padStart(3, "0") +
+        "\n\nPuedes consultarlo en el historial." +
+        "\n\nNo se ha enviado a ninguna autoridad."
+    );
+
+
+    document.getElementById("ubicacion").value = "";
+
+    document.getElementById("descripcion").value = "";
+
+
+    actualizarContador();
+
+    mostrar("historial");
+
+}
+
+
+// ACTUALIZAR CONTADOR
+
+function actualizarContador() {
+
+    let reportes = obtenerReportes();
+
+    let contador =
+        document.getElementById("totalReportes");
+
+    if (contador) {
+
+        contador.textContent = reportes.length;
+
+    }
+
+}
+
+
+// MOSTRAR HISTORIAL DE REPORTES
+
+function mostrarReportes() {
+
+    let reportes = obtenerReportes();
+
+    let contenedor =
+        document.getElementById("listaReportes");
+
+    contenedor.innerHTML = "";
+
+
+    if (reportes.length === 0) {
+
+        contenedor.textContent =
+            "📋 Todavía no tienes reportes registrados.";
+
+        return;
+
+    }
+
+
+    reportes.slice().reverse().forEach(function(reporte, indice) {
+
+        let tarjeta = document.createElement("div");
+
+        tarjeta.className = "tarjeta";
+
+
+        let titulo = document.createElement("h3");
+
+        let numero = reporte.numero ||
+            (reportes.length - indice);
+
+        titulo.textContent =
+            "📋 Reporte N.° " +
+            String(numero).padStart(3, "0");
+
+
+        let ubicacion = document.createElement("p");
+
+        ubicacion.textContent =
+            "📍 Ubicación: " + reporte.ubicacion;
+
+
+        let problema = document.createElement("p");
+
+        problema.textContent =
+            "⚠️ Problema: " + reporte.problema;
+
+
+        let descripcion = document.createElement("p");
+
+        descripcion.textContent =
+            "📝 Descripción: " + reporte.descripcion;
+
+
+        let fecha = document.createElement("p");
+
+        fecha.textContent =
+            "📅 Fecha: " + reporte.fecha;
+
+
+        let estado = document.createElement("div");
+
+        estado.className = "estado";
+
+        estado.textContent =
+            "🟡 Estado: " +
+            (reporte.estado ||
+            "Pendiente de revisión (simulado)");
+
+
+        tarjeta.append(
+            titulo,
+            ubicacion,
+            problema,
+            descripcion,
+            fecha,
+            estado
+        );
+
+
+        contenedor.appendChild(tarjeta);
+
+    });
+
+}
+
+
+// MOSTRAR ZONAS EN EL MAPA
+
+function mostrarZonasMapa() {
+
+    let reportes = obtenerReportes();
+
+    let contenedor =
+        document.getElementById("zonasMapa");
+
+    contenedor.innerHTML = "";
+
+
+    if (reportes.length === 0) {
+
+        contenedor.textContent =
+            "Todavía no hay zonas reportadas.";
+
+        return;
+
+    }
+
+
+    reportes.slice().reverse().forEach(function(reporte) {
+
+        let tarjeta = document.createElement("div");
+
+        tarjeta.className = "tarjeta";
+
+
+        let titulo = document.createElement("h3");
+
+        titulo.textContent =
+            "📍 " + reporte.ubicacion;
+
+
+        let problema = document.createElement("p");
+
+        problema.textContent =
+            "⚠️ Problema: " + reporte.problema;
+
+
+        let descripcion = document.createElement("p");
+
+        descripcion.textContent =
+            "📝 " + reporte.descripcion;
+
+
+        tarjeta.append(
+            titulo,
+            problema,
+            descripcion
+        );
+
+
+        contenedor.appendChild(tarjeta);
+
+    });
+
+}
+
+
+// MOSTRAR NOTIFICACIONES
+
+function mostrarNotificaciones() {
+
+    let reportes = obtenerReportes();
+
+    let contenedor =
+        document.getElementById("listaNotificaciones");
+
+    contenedor.innerHTML = "";
+
+
+    if (reportes.length === 0) {
+
+        let aviso = document.createElement("div");
+
+        aviso.className = "aviso";
+
+        aviso.textContent =
+            "Todavía no hay notificaciones registradas.";
+
+        contenedor.appendChild(aviso);
+
+        return;
+
+    }
+
+
+    reportes.slice().reverse().forEach(function(reporte) {
+
+        let tarjeta = document.createElement("div");
+
+        tarjeta.className = "tarjeta";
+
+
+        let titulo = document.createElement("h3");
+
+        titulo.textContent =
+            "⚠️ Aviso de prueba: " + reporte.problema;
+
+
+        let ubicacion = document.createElement("p");
+
+        ubicacion.textContent =
+            "📍 Lugar: " + reporte.ubicacion;
+
+
+        let fecha = document.createElement("small");
+
+        fecha.textContent = reporte.fecha;
+
+
+        tarjeta.append(
+            titulo,
+            ubicacion,
+            fecha
+        );
+
+
+        contenedor.appendChild(tarjeta);
+
+    });
+
+}
+
+
+// CARGAR DATOS AL INICIAR
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    actualizarContador();
+
+    mostrarReportes();
+
+    mostrarZonasMapa();
+
+    mostrarNotificaciones();
+
+});
+
+</script>
+
+</body>
+
+</html>
